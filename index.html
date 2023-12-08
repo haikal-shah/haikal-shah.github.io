@@ -1,159 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-    hello fellow developers! if you are seeing this, you will cringe at my messy codes.
-    im aware of it since this website was written back in my first year of college hahaha.
-    hope you have a nice day, if you wanna connect with me, feel free to drop an email or
-    connect with me at linkedin :)
--->
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>Haikal Shah</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <script src="script.js"></script> 
-    <title>welcome!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+
+
 </head>
 <body>
 
-    <header>
-        <!--navigation bar -->
-            <nav class="nav-bar">
-                <div class="nav-branding"><a href="index.html">Haikal_Shah</a></div>
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="#section1">Home</a></li>
-                    <li class="nav-item"><a href="#section2">About</a></li>
-                    <li class="nav-item"><a href="#section3">Interest</a></li>  
-                </ul>
+    <div id="navigation-bar" class="overflow-x uppercase">
+        <button class="close-button">&times;</button>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="close-button">&times;</button>
+    </div>    
 
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </nav>
-    </header>
 
-    <!--first page-->
-    <div class="hero" id="section1" style="background: black; height: 100vh;">
-        <h1>This website is currently under maintenance,<br>there is so many things I need to change and improve.</h1>
-        <p>but hey, if you are really curious about me, feel free to keep scrolling.<br>I still kept the old site below <3</p>
-        <br>
-        <p>and rest in peace nugget, you are the funniest and smartest orange cat</p>
-    </div>
-    <!--end of first page-->
-
-    <!--first page-->
-    <div class="hero" id="section1">
-        <h1>This website is fully responsive</h1>
-        <p>but please use deskstop/laptop for the best user experience<br>or just tilt your phone horizontally :)</p>
-    </div>
-    <!--end of first page-->
-    
-    <!--second page-->
-    <div id="section2">
-
-        <div class="flex-container">
-            <div style="text-align: center; width: 100%; margin: 10% 0;">
-                <p>20 years old.</p>
-                <p>Currently studying at Multimedia University for Diploma in Information Technology.</p>
-                <p>Passionate in programming and self-improvement.</p>
-                <p>Volunteered in multiple diverse activities involving environmental, communicative, and motivational backgrounds.</p>
-                <br>
-                <p>Things I am currently doing:</p>
-                <ul style="list-style: none;">
-                    <li> - freelance programming</li>
-                    <li> - freelance tutoring</li>
-                    <li> - volunteering for TEDxMMU</li>
-                    <li> - part of MMU's peer counselor</li>
-                </ul>
-            </div>
-
-        </div>
-
-    </div>
-    <!--second page-->
-
-    <!--third page-->
-    <div class="flex-container-2" style="background-color: black;">
-        <div class="flex-3-item">
-            <img src="image/cof.jpg">
-        </div>
-        <div class="flex-3-item">
-            <img src="image/pc.jpg">
-        </div>
-        <div class="flex-3-item">
-            <img src="image/lib.jpg">
-        </div>
-    </div>
-    <!--end of third page-->
-
-    <div id="section3">
-
-        <div><h1 class="header">Interest/hobbies</h1></div>
-
-        <div class="flex-container">
-
-            <div>
-                <div class="columnleft" style="background-color: whitesmoke;">
-                    <img src="image/cof2.jpg">
-                </div>
-
-                <div class="columnright">
-
-                    <p>PROGRAMMING</p>
-                    <ul style="list-style: none;">
-                        <li> - C++</li>
-                        <li> - C</li>
-                        <li> - HTML & CSS</li>
-                        <li> - JS</li>
-                        <li> - PHP</li>
-                        <li> - planning to learn PY soon</li>
-                    </ul>
-                    <br>
-                    <p>TECH</p>
-                    <ul style="list-style: none;">
-                        <li> - computer hardware</li>
-                        <li> - audiophile</li>
-                        <li> - virtual technology</li>
-                        <li> - planning to get into machine learning [AI]</li>
-                    </ul>
-                    <br>
-                    <p>SELF-IMPROVEMENT</p>
-                    <ul style="list-style: none;">
-                        <li> - consuming self-improvement related media</li>
-                        <li> - currently studying stoicism</li>
-                    </ul>
-                    <br>
-                    <p>MUSIC</p>
-                    <ul style="list-style: none;">
-                        <li> - hip-hop & rap</li>
-                        <li> - ambient-jazz</li>
-                        <li> - glitch</li>
-                        <li> - and more</li>
-                    </ul>
-                    <br>
-                    <p>OTAKU RELATED STUFF</p>
-                    <ul style="list-style: none;">
-                        <li> - just a form of escapism</li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <footer>
+    <div id="main" class="bg-black flex fullscreen text-center">
         <div>
-            <p>thank you for visiting!</p>
-            <p>for any inquires email me at:<br>haikalshah.email@gmail.com</p>
-            <p>or<br>network with me!</p>
-            <a href="https://github.com/voxxagon" style="color: white;"><i class="fa-brands fa-github"></i>voxxagon</a>
-            <a href="https://www.linkedin.com/in/haikal-shah/" style="color: white;"><i class="fa-brands fa-linkedin"></i>haikalshah</a>
+            <h1>Haikal Shah</h1>
         </div>
-    </footer>
+    </div>
 
+    <div id="about" class="bg-black text-center">
+        <div class="container">
+            <h2 class="uppercase">About</h2>
+            <p>
+                A 20 years old aspiring software developer from Malaysia, currently specialized in web development.
+                Graduated with a diploma in information technology from Multimedia University. 
+                Passionate about programming, coffee, virtual idol, ACG culture, music, literature and self-improvement.
+                Constantly seeking opportunities to enhance my skills and knowledge. Over the years, I have had the privilege to work and volunteer
+                in diverse activities involving programming, communication, motivation, and conservationist.
+            </p>
+            <div class="swiper round-border">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background-image: url(/image/tedx.jpg); background-position: left center;"></div>
+                    <div class="swiper-slide" style="background-image: url(/image/programming.jpg); background-position: center bottom;"></div>
+                    <div class="swiper-slide" style="background-image: url(/image/bookstore.jpg); background-position: center center;"></div>
+                    <div class="swiper-slide" style="background-image: url(/image/music.jpg); background-position: center center;"></div>
+                    <div class="swiper-slide" style="background-image: url(/image/coffee.jpg); background-position:center bottom;"></div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gradient-spacer" style="background-image:linear-gradient(black,white);"></div>
+
+    <div id="technology" class="bg-white text-center">
+        <div class="container">
+            <h2 class=" uppercase" style="text-align: right;">Technology</h2>
+            <div class="tech-grid">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"/> 
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg"/>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/composer/composer-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" />
+            </div>
+        </div>
+    </div>
+
+    <div id="portfolio" class="bg-white">
+        <div class="container">
+            <h2 class="uppercase">Portfolio</h2>
+            <div class="row round-border" style="margin: auto;">
+                <div class="col-lg-4 col-md-12">
+                    <div class="box box-img"><a href="https://www.billplz.com/" target="_blank"><img src="/image/Billplz_Blue.png" class="img-fluid"></a></div>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    <div class="box box-desc">
+                        <p><a href="https://www.billplz.com/" target="_blank">billplz.com</a></p>
+                        <p>Billplz is a payment platform that allows organizations to accept and pay payments via FPX online banking, cards and e-wallets, email and SMS, and more. They generated 5 billion ringgit in annual GMV.</p>
+                        <p>I had the opportunity to work with them and created 1 Sen Billplz.</p>
+                        <p><a href="https://1sen.billplz.com/" target="_blank">1sen.billplz.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div>
+                <img src="/image/haikalbillplz.jfif" class="img-fluid">
+            </div>
+            <div class="spacer"></div>
+            <p class="text-center">many more to come?</p>
+        </div>
+    </div>
+
+    <div class="gradient-spacer" style="background-image:linear-gradient(white,black);"></div>
+
+    <div id="contact" class="flex bg-black fullscreen text-center">
+        <div class="container">
+            <h2 class="uppercase">Contact</h2>
+            <h1>Lets</h1>
+            <h1>
+                <a href="#" class="typewrite" data-period="200" data-type='[ "ᗜ˰ᗜ", "WORK", "CONNECT", "DEVELOP", "BEFRIEND", "CODE", "TALK",":3" ]'>
+                    <span class="wrap"></span>
+                </a>
+            </h1>
+            <h1>with me</h1>
+            <p>haikalshah.work@gmail.com</p>
+            <p><a href="https://www.linkedin.com/in/haikal-shah/" target="_blank"><i class="devicon-linkedin-plain"></i>Linkedin</a></p>
+            <p><a href="https://github.com/haikal-shah" target="_blank"><i class="devicon-github-original"></i>Github</a></p>
+        </div>
+    </div>
+
+    <div class="bg-black text-center">
+        <div class="container">
+            <p>Thanks for coming!</p>
+            <p>Haikal Shah &copy;2023</p>
+            <p>All Right Reserved</p>
+        </div>
+    </div>
 </body>
 </html>
