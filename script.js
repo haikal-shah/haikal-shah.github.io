@@ -1,3 +1,5 @@
+AOS.init();
+
 document.addEventListener('DOMContentLoaded', function() {
     var navBar = document.getElementById('navigation-bar');
     var closeButtons = document.querySelectorAll('.close-button');
