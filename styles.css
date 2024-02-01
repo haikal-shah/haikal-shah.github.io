@@ -203,6 +203,13 @@ body {
     color: white;
 }
 
+#contact{
+    background-image: url(/image/McIj.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
 #contact a{
     text-decoration: underline;
     color: white;
