@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Hygiene Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-main: #ff8fab;
+            --pink-light: #fb6f92;
+            --pink-bg: #ffe5ec;
+            --pink-border: #ffc2d1;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--pink-bg);
+            color: #4a4a4a;
+            /* Cute dotted background pattern */
+            background-image: radial-gradient(var(--pink-border) 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+
+        .pixel-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .retro-container {
+            background-color: white;
+            border: 4px solid var(--pink-main);
+            border-radius: 16px;
+            box-shadow: 6px 6px 0px var(--pink-light);
+            overflow: hidden;
+        }
+
+        .retro-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .retro-table th, .retro-table td {
+            border: 2px solid var(--pink-border);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .retro-table th {
+            background-color: #fff0f3;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--pink-light);
+        }
+
+        .retro-table .day-col {
+            background-color: #fff0f3;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .table-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            color: #4a4a4a;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .table-input:focus {
+            background-color: var(--pink-bg);
+        }
+
+        .rating-btn {
+            width: 100%;
+            height: 100%;
+            min-height: 40px;
+            background-color: transparent;
+            border: 2px dashed var(--pink-border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-btn:hover {
+            background-color: var(--pink-bg);
+            transform: scale(1.05);
+        }
+
+        /* Rating specific colors */
+        .rating-good { background-color: #d1fae5; border-color: #34d399; color: #065f46; } /* Pastel green */
+        .rating-border { background-color: #fef08a; border-color: #facc15; color: #854d0e; } /* Pastel yellow */
+        .rating-bad { background-color: #fecdd3; border-color: #fb7185; color: #9f1239; } /* Pastel red */
+        
+        .rating-good:hover { background-color: #a7f3d0; }
+        .rating-border:hover { background-color: #fde047; }
+        .rating-bad:hover { background-color: #fda4af; }
+
+        .ascii-cat {
+            line-height: 1.2;
+            white-space: pre;
+            margin: 0 auto;
+            display: block;
+            width: fit-content;
+            color: var(--pink-main);
+            text-align: left;
+        }
+        
+        .paw-bg {
+            /* Cute paw print background mixed with the dots */
+            background-image: 
+                radial-gradient(var(--pink-border) 2px, transparent 2px),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32' fill='%23ffc2d1' opacity='0.4'%3E%3Cpath d='M12 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4 1c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm8 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4 2c-3.3 0-6 2.7-6 6v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1c0-3.3-2.7-6-6-6z'/%3E%3C/svg%3E");
+            background-size: 20px 20px, 80px 80px;
+            background-position: 0 0, 10px 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex justify-center items-start paw-bg">
+
+    <div id="tracker-export" class="max-w-6xl w-full flex flex-col gap-6">
+        
+        <!-- Main Tracker Table -->
+        <div class="retro-container w-full p-4 pt-0 md:p-6 md:pt-0 bg-white/95 backdrop-blur-sm">
+            
+            <div class="text-center mb-4 mt-0">
+                <div class="ascii-cat pixel-font text-[10px] md:text-xs mb-2">
+     |\      _,,,---,,_
+ZZZzz /,`.-'`'    -.  ;-;;,_
+     |,4-  ) )-,_. ,\ (  `'-'
+    '---''(_/--'  `-'\_)</div>
+                <h1 id="tracker-title" class="pixel-font text-xl md:text-2xl text-pink-500 leading-relaxed drop-shadow-sm">Sleep Tracker :3</h1>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="retro-table">
+                    <thead>
+                        <tr>
+                            <th class="pixel-font">Day</th>
+                            <th class="pixel-font">Slept</th>
+                            <th class="pixel-font">Woke</th>
+                            <th class="pixel-font">Hours</th>
+                            <th class="pixel-font">Breakfast</th>
+                            <th class="pixel-font">Extra</th>
+                            <th class="pixel-font">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tracker-body">
+                        <!-- Rows will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="retro-container w-full p-6 h-max bg-white/95 backdrop-blur-sm">
+            <h2 class="pixel-font text-sm text-pink-500 mb-6 text-center border-b-2 border-pink-200 pb-2">Colour Legend!</h2>
+            
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-10 rating-good rounded-lg flex items-center justify-center pixel-font text-xs border-2 border-[#34d399] shadow-sm">:3</div>
+                    <span class="font-medium text-gray-600">Really good</span>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-10 rating-border rounded-lg flex items-center justify-center pixel-font text-xs border-2 border-[#facc15] shadow-sm">:|</div>
+                    <span class="font-medium text-gray-600">Borderline</span>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-10 rating-bad rounded-lg flex items-center justify-center pixel-font text-[10px] border-2 border-[#fb7185] shadow-sm">:(</div>
+                    <span class="font-medium text-gray-600 leading-tight">Mistakes were made</span>
+                </div>
+            </div>
+
+            <button id="download-png" type="button" data-html2canvas-ignore="true" class="mt-6 w-full rounded-lg border-2 border-pink-300 bg-pink-100 px-4 py-2 font-medium text-pink-600 shadow-sm transition hover:bg-pink-200">
+                Download PNG
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'sleepHygieneData_week2';
+        const NAME_STORAGE_KEY = 'sleepHygieneUserName';
+        
+        const daysOfWeek = [
+            "Sunday 20th",
+            "Monday 21st",
+            "Tuesday 22nd",
+            "Wednesday 23rd",
+            "Thursday 24th",
+            "Friday 25th",
+            "Saturday 26th"
+        ];
+
+        // Rating states: 0 = none, 1 = really good, 2 = borderline, 3 = bad
+        const ratings = [
+            { class: '', text: '?' }, // Default
+            { class: 'rating-good', text: ':3' },
+            { class: 'rating-border', text: ':|' },
+            { class: 'rating-bad', text: ':(' }
+        ];
+
+        let trackerData = [];
+
+        function init() {
+            loadUserName();
+            loadData();
+            renderTable();
+        }
+
+        function loadUserName() {
+            let userName = localStorage.getItem(NAME_STORAGE_KEY);
+
+            if (!userName) {
+                userName = prompt('Before we start, what is your name?')?.trim() || '';
+                if (userName) {
+                    localStorage.setItem(NAME_STORAGE_KEY, userName);
+                }
+            }
+
+            if (userName) {
+                document.getElementById('tracker-title').textContent = `${userName}'s Sleep Tracker :3`;
+            }
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    trackerData = JSON.parse(saved);
+                    // Handle case where saved data might be malformed or missing days
+                    if (trackerData.length !== daysOfWeek.length) {
+                         createDefaultData();
+                    }
+                    trackerData = trackerData.map(data => ({
+                        ...data,
+                        description: data.description ?? data.bfast ?? '',
+                        extra: data.extra ?? ''
+                    }));
+                    trackerData.forEach(updateSleepDuration);
+                } catch (e) {
+                    createDefaultData();
+                }
+            } else {
+                createDefaultData();
+            }
+        }
+
+        function createDefaultData() {
+            trackerData = daysOfWeek.map(day => ({
+                day: day,
+                sleptAt: '',
+                wokeAt: '',
+                sleptFor: '',
+                description: '',
+                extra: '',
+                ratingIndex: 0
+            }));
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(trackerData));
+        }
+
+        function getMinutes(time) {
+            if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
+                return null;
+            }
+
+            const [hours, minutes] = time.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        function updateSleepDuration(data) {
+            const sleptMinutes = getMinutes(data.sleptAt);
+            const wokeMinutes = getMinutes(data.wokeAt);
+
+            if (sleptMinutes === null || wokeMinutes === null || sleptMinutes === wokeMinutes) {
+                data.sleptFor = '';
+                return;
+            }
+
+            let duration = wokeMinutes - sleptMinutes;
+            if (duration < 0) {
+                duration += 24 * 60;
+            }
+
+            const hours = Math.floor(duration / 60);
+            const minutes = duration % 60;
+            data.sleptFor = `${hours}h ${String(minutes).padStart(2, '0')}m`;
+        }
+
+        function clearData() {
+            if(confirm("Are you sure you want to reset all data for this week?")) {
+                createDefaultData();
+                saveData();
+                renderTable();
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tracker-body');
+            tbody.innerHTML = '';
+
+            trackerData.forEach((data, index) => {
+                const tr = document.createElement('tr');
+                
+                // Get current rating details
+                const currentRating = ratings[data.ratingIndex];
+
+                tr.innerHTML = `
+                    <td class="day-col">${data.day}</td>
+                    <td>
+                        <input type="time" step="60" class="table-input" value="${data.sleptAt}" 
+                            oninput="updateField(${index}, 'sleptAt', this.value)">
+                    </td>
+                    <td>
+                        <input type="time" step="60" class="table-input" value="${data.wokeAt}" 
+                            oninput="updateField(${index}, 'wokeAt', this.value)">
+                    </td>
+                    <td>
+                        <span class="table-input block">${data.sleptFor || '-'}</span>
+                    </td>
+                    <td>
+                        <input type="text" class="table-input" value="${data.description}" 
+                            oninput="updateField(${index}, 'description', this.value)">
+                    </td>
+                    <td>
+                        <input type="text" class="table-input" value="${data.extra}" 
+                            oninput="updateField(${index}, 'extra', this.value)">
+                    </td>
+                    <td class="text-center p-1">
+                        <button class="rating-btn pixel-font text-xs ${currentRating.class}" 
+                            onclick="toggleRating(${index})">
+                            ${currentRating.text}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateField(index, field, value) {
+            trackerData[index][field] = value;
+
+            if (field === 'sleptAt' || field === 'wokeAt') {
+                updateSleepDuration(trackerData[index]);
+            }
+
+            saveData();
+        }
+
+        function toggleRating(index) {
+            // Cycle through 0 -> 1 -> 2 -> 3 -> 0
+            trackerData[index].ratingIndex = (trackerData[index].ratingIndex + 1) % ratings.length;
+            saveData();
+            renderTable(); // Re-render to show updated color and emoji
+        }
+
+        function downloadPng() {
+            const tracker = document.getElementById('tracker-export');
+            const downloadButton = document.getElementById('download-png');
+            const exportWidth = 1152;
+            const exportHeight = tracker.scrollHeight;
+
+            downloadButton.disabled = true;
+            downloadButton.textContent = 'Creating PNG...';
+
+            html2canvas(tracker, {
+                backgroundColor: '#ffe5ec',
+                scale: 2,
+                width: exportWidth,
+                height: exportHeight,
+                windowWidth: exportWidth,
+                windowHeight: exportHeight,
+                x: 0,
+                y: 0,
+                scrollX: 0,
+                scrollY: 0,
+                onclone: clonedDocument => {
+                    const clonedTracker = clonedDocument.getElementById('tracker-export');
+                    clonedTracker.classList.add('paw-bg');
+                    clonedDocument.body.style.margin = '0';
+                    clonedDocument.body.style.padding = '0';
+                    clonedTracker.style.width = `${exportWidth}px`;
+                    clonedTracker.style.maxWidth = 'none';
+                    clonedTracker.style.margin = '0';
+                    clonedTracker.style.padding = '0 32px 32px';
+                    clonedTracker.style.paddingTop = '0';
+                    clonedTracker.style.boxSizing = 'border-box';
+                    clonedTracker.querySelectorAll('.overflow-x-auto').forEach(container => {
+                        container.style.overflow = 'visible';
+                    });
+                }
+            })
+                .then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'sleep-hygiene-tracker.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                })
+                .finally(() => {
+                    downloadButton.disabled = false;
+                    downloadButton.innerHTML = 'Download PNG!';
+                });
+        }
+
+        // Initialize the app on load
+        document.getElementById('download-png').addEventListener('click', downloadPng);
+        window.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>
