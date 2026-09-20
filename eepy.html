@@ -37,6 +37,25 @@
             border-radius: 16px;
             box-shadow: 6px 6px 0px var(--pink-light);
             overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .export-pattern {
+            position: absolute;
+            inset: 0;
+            background-color: var(--pink-bg);
+            background-image: 
+                radial-gradient(var(--pink-border) 2px, transparent 2px),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32' fill='%23ffc2d1' opacity='0.4'%3E%3Cpath d='M12 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4 1c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm8 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-4 2c-3.3 0-6 2.7-6 6v1c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-1c0-3.3-2.7-6-6-6z'/%3E%3C/svg%3E");
+            background-size: 20px 20px, 80px 80px;
+            background-position: 0 0, 10px 10px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #tracker-export {
+            position: relative;
         }
 
         .retro-table {
@@ -81,6 +100,14 @@
 
         .table-input:focus {
             background-color: var(--pink-bg);
+        }
+
+        .export-text {
+            display: block;
+            height: auto;
+            min-height: 1.5rem;
+            white-space: normal;
+            overflow-wrap: anywhere;
         }
 
         .rating-btn {
@@ -135,6 +162,7 @@
 <body class="min-h-screen p-4 md:p-8 flex justify-center items-start paw-bg">
 
     <div id="tracker-export" class="max-w-6xl w-full flex flex-col gap-6">
+        <div class="export-pattern" aria-hidden="true"></div>
         
         <!-- Main Tracker Table -->
         <div class="retro-container w-full p-4 pt-0 md:p-6 md:pt-0 bg-white/95 backdrop-blur-sm">
@@ -188,8 +216,19 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
                 </div>
             </div>
 
-            <button id="download-png" type="button" data-html2canvas-ignore="true" class="mt-6 w-full rounded-lg border-2 border-pink-300 bg-pink-100 px-4 py-2 font-medium text-pink-600 shadow-sm transition hover:bg-pink-200">
+            <label for="start-date" data-html2canvas-ignore="true" class="mt-6 block text-center font-medium text-pink-600">Settings</label>
+            <input id="start-date" type="date" data-html2canvas-ignore="true" class="mt-2 w-full rounded-lg border-2 border-pink-300 bg-pink-100 px-4 py-2 text-center font-medium text-pink-600 outline-none">
+
+            <button id="change-name" type="button" data-html2canvas-ignore="true" class="mt-3 w-full rounded-lg border-2 border-pink-300 bg-white px-4 py-2 font-medium text-pink-600 shadow-sm transition hover:bg-pink-100">
+                Change Name
+            </button>
+
+            <button id="download-png" type="button" data-html2canvas-ignore="true" class="mt-4 w-full rounded-lg border-2 border-pink-300 bg-pink-100 px-4 py-2 font-medium text-pink-600 shadow-sm transition hover:bg-pink-200">
                 Download PNG
+            </button>
+
+            <button id="reset-data" type="button" data-html2canvas-ignore="true" class="mt-3 w-full rounded-lg border-2 border-pink-300 bg-white px-4 py-2 font-medium text-pink-600 shadow-sm transition hover:bg-pink-100">
+                Reset Week
             </button>
 
         </div>
@@ -199,16 +238,9 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     <script>
         const STORAGE_KEY = 'sleepHygieneData_week2';
         const NAME_STORAGE_KEY = 'sleepHygieneUserName';
+        const START_DATE_STORAGE_KEY = 'sleepHygieneStartDate';
         
-        const daysOfWeek = [
-            "Sunday 20th",
-            "Monday 21st",
-            "Tuesday 22nd",
-            "Wednesday 23rd",
-            "Thursday 24th",
-            "Friday 25th",
-            "Saturday 26th"
-        ];
+        let startDate = localStorage.getItem(START_DATE_STORAGE_KEY) || '2026-09-20';
 
         // Rating states: 0 = none, 1 = really good, 2 = borderline, 3 = bad
         const ratings = [
@@ -222,8 +254,23 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 
         function init() {
             loadUserName();
+            document.getElementById('start-date').value = startDate;
             loadData();
             renderTable();
+        }
+
+        function getDaysOfWeek() {
+            const firstDay = new Date(`${startDate}T00:00:00`);
+            return Array.from({ length: 7 }, (_, index) => {
+                const day = new Date(firstDay);
+                day.setDate(firstDay.getDate() + index);
+                const dayNumber = day.getDate();
+                const suffix = dayNumber % 100 >= 11 && dayNumber % 100 <= 13
+                    ? 'th'
+                    : ({ 1: 'st', 2: 'nd', 3: 'rd' }[dayNumber % 10] || 'th');
+                const weekday = day.toLocaleDateString('en-US', { weekday: 'long' });
+                return `${weekday} ${dayNumber}${suffix}`;
+            });
         }
 
         function loadUserName() {
@@ -241,7 +288,18 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
             }
         }
 
+        function changeName() {
+            const currentName = localStorage.getItem(NAME_STORAGE_KEY) || '';
+            const newName = prompt('What should we call you?', currentName)?.trim() || '';
+
+            if (newName) {
+                localStorage.setItem(NAME_STORAGE_KEY, newName);
+                document.getElementById('tracker-title').textContent = `${newName}'s Sleep Tracker :3`;
+            }
+        }
+
         function loadData() {
+            const daysOfWeek = getDaysOfWeek();
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try {
@@ -265,7 +323,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
         }
 
         function createDefaultData() {
-            trackerData = daysOfWeek.map(day => ({
+            trackerData = getDaysOfWeek().map(day => ({
                 day: day,
                 sleptAt: '',
                 wokeAt: '',
@@ -309,11 +367,25 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
         }
 
         function clearData() {
-            if(confirm("Are you sure you want to reset all data for this week?")) {
+            if (confirm("Are you sure you want to reset all data for this week?")) {
                 createDefaultData();
                 saveData();
                 renderTable();
             }
+        }
+
+        function updateStartDate(value) {
+            if (!value) {
+                return;
+            }
+
+            startDate = value;
+            localStorage.setItem(START_DATE_STORAGE_KEY, startDate);
+            trackerData.forEach((data, index) => {
+                data.day = getDaysOfWeek()[index];
+            });
+            saveData();
+            renderTable();
         }
 
         function renderTable() {
@@ -337,7 +409,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
                             oninput="updateField(${index}, 'wokeAt', this.value)">
                     </td>
                     <td>
-                        <span class="table-input block">${data.sleptFor || '-'}</span>
+                        <span id="slept-for-${index}" class="table-input block">${data.sleptFor || '-'}</span>
                     </td>
                     <td>
                         <input type="text" class="table-input" value="${data.description}" 
@@ -363,6 +435,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 
             if (field === 'sleptAt' || field === 'wokeAt') {
                 updateSleepDuration(trackerData[index]);
+                document.getElementById(`slept-for-${index}`).textContent = trackerData[index].sleptFor || '-';
             }
 
             saveData();
@@ -379,7 +452,6 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
             const tracker = document.getElementById('tracker-export');
             const downloadButton = document.getElementById('download-png');
             const exportWidth = 1152;
-            const exportHeight = tracker.scrollHeight;
 
             downloadButton.disabled = true;
             downloadButton.textContent = 'Creating PNG...';
@@ -388,9 +460,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
                 backgroundColor: '#ffe5ec',
                 scale: 2,
                 width: exportWidth,
-                height: exportHeight,
                 windowWidth: exportWidth,
-                windowHeight: exportHeight,
                 x: 0,
                 y: 0,
                 scrollX: 0,
@@ -398,14 +468,28 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
                 onclone: clonedDocument => {
                     const clonedTracker = clonedDocument.getElementById('tracker-export');
                     clonedTracker.classList.add('paw-bg');
+                    clonedTracker.style.backgroundColor = '#ffe5ec';
                     clonedDocument.body.style.margin = '0';
                     clonedDocument.body.style.padding = '0';
                     clonedTracker.style.width = `${exportWidth}px`;
                     clonedTracker.style.maxWidth = 'none';
-                    clonedTracker.style.margin = '0';
-                    clonedTracker.style.padding = '0 32px 32px';
-                    clonedTracker.style.paddingTop = '0';
+                    clonedTracker.style.padding = '64px';
                     clonedTracker.style.boxSizing = 'border-box';
+                    const firstCard = clonedTracker.querySelector('.retro-container');
+                    const header = firstCard.querySelector('.text-center');
+                    firstCard.style.marginTop = '0';
+                    firstCard.style.paddingTop = '0';
+                    header.style.marginTop = '0';
+                    header.style.paddingTop = '0';
+                    clonedTracker.querySelectorAll('input[type="text"]').forEach(input => {
+                        const text = clonedDocument.createElement('span');
+                        text.className = `${input.className} export-text`;
+                        text.textContent = input.value;
+                        input.replaceWith(text);
+                    });
+                    clonedTracker.querySelectorAll('[data-html2canvas-ignore="true"]').forEach(element => {
+                        element.style.display = 'none';
+                    });
                     clonedTracker.querySelectorAll('.overflow-x-auto').forEach(container => {
                         container.style.overflow = 'visible';
                     });
@@ -424,7 +508,10 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
         }
 
         // Initialize the app on load
+        document.getElementById('change-name').addEventListener('click', changeName);
         document.getElementById('download-png').addEventListener('click', downloadPng);
+        document.getElementById('reset-data').addEventListener('click', clearData);
+        document.getElementById('start-date').addEventListener('change', event => updateStartDate(event.target.value));
         window.addEventListener('DOMContentLoaded', init);
 
     </script>
